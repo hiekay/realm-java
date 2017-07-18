@@ -460,8 +460,7 @@ public class Realm extends BaseRealm {
                 String className = Table.getClassNameForTable(mediator.getTableName(modelClass));
                 Pair<Class<? extends RealmModel>, String> key = Pair.<Class<? extends RealmModel>, String>create(modelClass, className);
                 // More fields in the Realm than defined is allowed for synced Realm.
-                columnInfoMap.put(key, mediator.validateTable(modelClass, realm.sharedRealm,
-                        configuration.isSyncConfiguration()));
+                columnInfoMap.put(key, mediator.createColumnInfo(modelClass, realm.sharedRealm));
             }
 
             realm.getSchema().setInitialColumnIndices(realm.getVersion(), columnInfoMap);
@@ -1707,7 +1706,7 @@ public class Realm extends BaseRealm {
             //noinspection CaughtExceptionImmediatelyRethrown
             try {
                 for (Class<? extends RealmModel> clazz : modelClasses) {
-                    final ColumnInfo columnInfo = mediator.validateTable(clazz, sharedRealm, true);
+                    final ColumnInfo columnInfo = mediator.createColumnInfo(clazz, sharedRealm);
                     String className = Table.getClassNameForTable(mediator.getTableName(clazz));
                     Pair<Class<? extends RealmModel>, String> key = Pair.<Class<? extends RealmModel>, String>create(clazz, className);
                     map.put(key, columnInfo);

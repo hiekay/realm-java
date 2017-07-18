@@ -52,17 +52,13 @@ public abstract class RealmProxyMediator {
     public abstract Map<Class<? extends RealmModel>, OsObjectSchemaInfo> getExpectedObjectSchemaInfoMap();
 
     /**
-     * Validates the backing table in Realm for the given RealmObject class.
+     * Creates {@link ColumnInfo} for the given RealmObject class.
      *
      * @param clazz the {@link RealmObject} model class to validate.
-     * @param sharedRealm the wrapper object of underlying native database to validate against.
-     * @param allowExtraColumns if {@code} false, {@link io.realm.exceptions.RealmMigrationNeededException}
-     * is thrown when the column count it more than expected.
+     * @param sharedRealm the wrapper object of underlying native database to get column information from.
      * @return the field indices map.
      */
-    public abstract ColumnInfo validateTable(Class<? extends RealmModel> clazz,
-            SharedRealm sharedRealm,
-            boolean allowExtraColumns);
+    public abstract ColumnInfo createColumnInfo(Class<? extends RealmModel> clazz, SharedRealm sharedRealm);
 
     /**
      * Returns a map of non-obfuscated object field names to their internal Realm name.
